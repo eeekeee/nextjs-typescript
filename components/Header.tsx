@@ -1,18 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
-import { css } from "@emotion/react";
 
 import Logo from "@/assets/GUAM.png";
 
-const headerStyle = css({
-  backgroundColor: "white",
-  width: "100%",
-  height: 200,
-});
-
 function Header() {
   return (
-    <div css={{ font }}>
+    <div
+      style={{
+        backgroundColor: "white",
+        height: "150px",
+        display: "flex",
+      }}
+    >
       <div>
         <Image src={Logo} alt="logo" />
         <h2>LOGO</h2>

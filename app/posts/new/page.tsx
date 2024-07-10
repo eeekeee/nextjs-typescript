@@ -1,3 +1,7 @@
 export default function NewPostPage() {
-  return <h1>NewPostPage</h1>;
+  return (
+    <main>
+      <h1>NewPostPage</h1>
+    </main>
+  );
 }

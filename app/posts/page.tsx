@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function PostsPage() {
   return (
     <main>
-      <h1>PostsPage</h1>
+      <h1 className="text-3xl font-bold underline">PostsPage</h1>
     </main>
   );
 }

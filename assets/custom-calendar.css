@@ -32,12 +32,12 @@
 }
 
 .react-calendar__month-view__weekdays {
-  height: 80px;
+  height: 70px;
   text-align: center;
   text-transform: uppercase;
   font: inherit;
-
   abbr {
+    line-height: 50px;
     text-decoration: none;
     font-size: 1.2rem;
     font-weight: 900;
@@ -60,6 +60,7 @@
 
 .react-calendar__tile {
   max-width: 100%;
+  height: 90px;
   padding: 12px 6px;
   background: none;
   text-align: center;

@@ -7,7 +7,7 @@ function Header() {
       <Logo />
       <div className="flex">
         <NavLink href="/posts">Posts</NavLink>
-        <NavLink href="/calender">Calender</NavLink>
+        <NavLink href="/calendar">Calender</NavLink>
         <NavLink href="/others">Others</NavLink>
       </div>
       <div className="flex">

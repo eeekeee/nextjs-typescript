@@ -12,7 +12,10 @@ export default function Logo() {
   };
 
   return (
-    <div className="flex mx-10 cursor-pointer" onClick={LogoClickHandler}>
+    <div
+      className="flex w-[240px] mx-10 cursor-pointer"
+      onClick={LogoClickHandler}
+    >
       <Image src={LogoImage} alt="logo" />
     </div>
   );

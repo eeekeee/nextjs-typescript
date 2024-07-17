@@ -1,5 +1,6 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Await } from "react-router-dom";
+import TodoItem from "./TodoItem";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -29,9 +30,7 @@ export default function TodosList({
       <Suspense fallback={<p>Loading...</p>}>
         <Await resolve={todos}>
           {todos.map((todo, index) => (
-            <p key={index} className="border-4 py-4 mb-2">
-              {todo.title}
-            </p>
+            <TodoItem key={index} todo={todo} />
           ))}
         </Await>
       </Suspense>

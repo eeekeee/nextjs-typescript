@@ -16,7 +16,7 @@ export default function Logo() {
       className="flex w-[240px] mx-10 cursor-pointer"
       onClick={LogoClickHandler}
     >
-      <Image src={LogoImage} alt="logo" />
+      <Image src={LogoImage} alt="logo" className="w-[240px] h-auto" priority />
     </div>
   );
 }

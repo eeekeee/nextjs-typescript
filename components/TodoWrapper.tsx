@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import TodosList from "./TodosList";
-import NewTodoModal from "@/components/NewTodoModal";
+import TodoModal from "@/components/TodoModal";
+import { formattedDate, isSameDay } from "@/util/date";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -36,23 +37,8 @@ export default function TodoWrapper({ todos }: { todos: Todo[] }) {
     setShowModal((prev) => !prev);
   };
 
-  const formattedDate = (date: Date) => {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
   const dateChangeHandler = (newDate: Value) => {
     setDate(newDate);
-  };
-
-  const isSameDay = (d1: Date, d2: Date) => {
-    return (
-      d1.getFullYear() === d2.getFullYear() &&
-      d1.getMonth() === d2.getMonth() &&
-      d1.getDate() === d2.getDate()
-    );
   };
 
   const addContent = ({ date }: { date: Date }) => {
@@ -103,7 +89,7 @@ export default function TodoWrapper({ todos }: { todos: Todo[] }) {
         />
         <TodosList date={date} todos={currentTodos} />
       </div>
-      {showModal && <NewTodoModal modalHandler={modalHandler} />}
+      {showModal && <TodoModal modalHandler={modalHandler} mode="new" />}
     </main>
   );
 }

@@ -1,6 +1,7 @@
-import { Component, FC, useState } from "react";
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+import { useState } from "react";
+import TodoModal from "./TodoModal";
+import { deleteTodo } from "@/lib/todos";
+
 type Todo = {
   _id: string;
   title: string;
@@ -9,6 +10,7 @@ type Todo = {
 
 export default function TodoItem({ todo }: { todo: Todo }) {
   const [focused, setFocused] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<Boolean>(false);
 
   const mouseEnterHandler = () => {
     setFocused(true);
@@ -18,6 +20,25 @@ export default function TodoItem({ todo }: { todo: Todo }) {
     setFocused(false);
   };
 
+  const modalHandler = () => {
+    setShowModal((prev) => !prev);
+  };
+
+  async function deleteTodoHandler() {
+    const sure = window.confirm("일정을 삭제하시겠습니까?");
+
+    if (sure) {
+      const { success }: { success: boolean } = await deleteTodo(todo._id);
+      if (success) {
+        window.location.reload();
+      } else {
+        alert("일정 삭제 실패");
+      }
+    } else {
+      return;
+    }
+  }
+
   return (
     <div
       className="flex justify-between border-4 p-4 mb-2"
@@ -26,9 +47,12 @@ export default function TodoItem({ todo }: { todo: Todo }) {
     >
       {todo.title}
       <div className="flex gap-6">
-        {focused && <button>수정</button>}
-        {focused && <button>삭제</button>}
+        {focused && <button onClick={modalHandler}>수정</button>}
+        {focused && <button onClick={deleteTodoHandler}>삭제</button>}
       </div>
+      {showModal && (
+        <TodoModal modalHandler={modalHandler} mode="edit" todo={todo} />
+      )}
     </div>
   );
 }

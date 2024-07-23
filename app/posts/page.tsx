@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 
 import { getPosts } from "@/lib/posts";
-import PostsList from "@/components/PostsList";
+import PostsList from "@/components/Post/PostsList";
 
 async function Posts() {
   const posts = await getPosts();

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import TodosList from "./TodosList";
-import TodoModal from "@/components/TodoModal";
+import TodoModal from "@/components/Todo/TodoModal";
 import { formattedDate, isSameDay } from "@/util/date";
 
 type ValuePiece = Date | null;

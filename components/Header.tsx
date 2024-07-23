@@ -11,7 +11,8 @@ function Header() {
         <NavLink href="/others">Others</NavLink>
       </div>
       <div className="flex w-[160px]">
-        <button className="mx-10 text-black text-4xl self-center">login</button>
+        {/* <button className="mx-10 text-black text-4xl self-center">login</button> */}
+        <NavLink href="/auth/login">login</NavLink>
       </div>
     </div>
   );

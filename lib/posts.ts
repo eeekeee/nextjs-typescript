@@ -2,6 +2,8 @@
 
 import { connectDB } from "@/lib/database";
 import { ObjectId } from "mongodb";
+import slugify from "slugify";
+import xss from "xss";
 
 export async function getPosts() {
   try {
@@ -11,11 +13,21 @@ export async function getPosts() {
     const posts = await postsCollection.find().toArray();
 
     // Convert MongoDB documents to plain objects
+    // const postsPlainObjects = posts.map((post) => ({
+    //   _id: post._id.toString(),
+    //   title: post.title,
+    //   content: post.content,
+    //   image: post.image,
+    //   author: post.author,
+    //   created_at: post.created_at,
+    //   updated_at: post.updated_at,
+    // }));
+
     const postsPlainObjects = posts.map((post) => ({
+      _id: post._id.toString(),
       title: post.title,
       content: post.content,
-      image: post.image,
-      author_id: post.author_id,
+
       created_at: post.created_at,
       updated_at: post.updated_at,
     }));
@@ -27,29 +39,39 @@ export async function getPosts() {
   }
 }
 
-export async function createPost(formData: FormData) {
+export async function getPost(id: string) {
   try {
-    const title = formData.get("title");
-    const content = formData.get("content");
-    const date = formData.get("date");
+    const db = (await connectDB()).db("guam");
+    const postsCollection = db.collection("posts");
 
-    if (title === null || date === null) {
-      throw new Error("Check your form");
-    }
+    const posts = await postsCollection.findOne({ _id: new ObjectId(id) });
 
-    if (typeof date === "string") {
-      const post = {
-        title: title as string,
-        date: new Date(date),
-      };
-      const db = (await connectDB()).db("guam");
-      const postsCollection = db.collection("posts");
-      const result = await postsCollection.insertOne(post);
-      console.log(result);
-      return { success: true };
-    } else {
-      throw new Error("date is not Date type");
-    }
+    return posts;
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    throw new Error("Failed to fetch posts");
+  }
+}
+
+export async function createPost(data: { title: string; content: string }) {
+  try {
+    const title = data.title as string;
+    const content = data.content as string;
+
+    const post = {
+      title: slugify(title),
+      content: xss(content),
+      // image: image,
+      // author: author,
+      created_at: new Date(),
+      updated_at: new Date(),
+    };
+
+    const db = (await connectDB()).db("guam");
+    const postsCollection = db.collection("posts");
+    const result = await postsCollection.insertOne(post);
+    console.log(result);
+    return { success: true };
   } catch (error) {
     console.error("Error creating new post", error);
     throw new Error("Failed to create new post");

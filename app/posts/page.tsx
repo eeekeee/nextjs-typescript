@@ -4,20 +4,27 @@ import { Suspense } from "react";
 
 import { getPosts } from "@/lib/posts";
 import PostsList from "@/components/Post/PostsList";
+import Link from "next/link";
 
 async function Posts() {
   const posts = await getPosts();
-  console.log(posts);
   return <PostsList posts={posts} />;
 }
 
 export default function PostsPage() {
   return (
-    <main className="mt-8">
-      <h1>Post Page</h1>
-      <Suspense fallback={<p>Loading... Posts</p>}>
-        <Posts />
-      </Suspense>
+    <main className="mt-8 border-red-500 border-2 ">
+      <div className="flex w-full justify-around items-center my-2">
+        <p className="text-3xl">Post Page</p>
+        <Link className="border-yellow-300 border-4" href={"/posts/new"}>
+          글 생성하기
+        </Link>
+      </div>
+      <div className="flex justify-center">
+        <Suspense fallback={<p>Loading... Posts</p>}>
+          <Posts />
+        </Suspense>
+      </div>
     </main>
   );
 }

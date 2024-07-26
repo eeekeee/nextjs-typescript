@@ -1,5 +1,5 @@
 import { createTodo, updateTodo } from "@/lib/todos";
-import TodoSubmitButton from "./TodoSubmitButton";
+import SubmitButton from "../SubmitButton";
 import { formattedDate } from "@/util/date";
 
 type Todo = {
@@ -86,12 +86,12 @@ export default function TodoModal({
 
         <div className="flex justify-end mt-8">
           <button
-            className="border-none w-28 py-2 px-4 text-base"
+            className="w-[200px] border-none  py-2 px-2 text-2xl"
             onClick={modalHandler}
           >
             Cancel
           </button>
-          <TodoSubmitButton />
+          <SubmitButton msg={"Save"} pendingMsg={"Saving"} />
         </div>
       </form>
     </div>

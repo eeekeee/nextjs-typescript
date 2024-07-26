@@ -42,8 +42,8 @@ export async function createUser(
     };
 
     const result = await usersCollection.insertOne(user);
-
-    return { success: true, userId: result.insertedId };
+    console.log(result);
+    return { success: true };
   } catch (error) {
     console.error("Error creating new user", error);
     throw new Error("Failed to create new user");

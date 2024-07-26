@@ -1,9 +1,16 @@
 import { Suspense } from "react";
 import { getTodos } from "@/lib/todos";
+import { type Metadata } from "next";
 import TodoWrapper from "@/components/Todo/TodoWrapper";
 
 import "react-calendar/dist/Calendar.css";
 import "../../assets/custom-calendar.css";
+
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "Calendar",
+  };
+};
 
 async function Todos() {
   const todos = await getTodos();

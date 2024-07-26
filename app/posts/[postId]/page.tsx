@@ -8,9 +8,23 @@ type Props = {
   };
 };
 
-export const generateMetadata = ({ params }: Props): Metadata => {
+// export const generateMetadata = ({ params }: Props): Metadata => {
+//   return {
+//     title: `Post ${params.postId}`,
+//   };
+// };
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const post = await getPost(params.postId);
+  if (!post) {
+    return {
+      title: "Post not found",
+    };
+  }
+
   return {
-    title: `Post ${params.postId}`,
+    title: post.title,
   };
 };
 

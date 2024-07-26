@@ -1,10 +1,14 @@
-// "use client";
-// import { CldImage } from "next-cloudinary";
 import { Suspense } from "react";
-
 import { getPosts } from "@/lib/posts";
 import PostsList from "@/components/Post/PostsList";
 import Link from "next/link";
+import { type Metadata } from "next";
+
+export const generateMetadata = (): Metadata => {
+  return {
+    title: "Posts",
+  };
+};
 
 async function Posts() {
   const posts = await getPosts();
@@ -28,6 +32,9 @@ export default function PostsPage() {
     </main>
   );
 }
+
+// "use client";
+// import { CldImage } from "next-cloudinary";
 
 // export default function PostPage() {
 //   return (

@@ -41,7 +41,7 @@ export default function NewPostForm() {
       className="max-w-4xl w-full grid place-items-center mx-auto pt-10 mb-10"
       onSubmit={submitHandler}
     >
-      <p className="text-3xl text-center text-sky-300 mb-10">New Post</p>
+      <p className="text-3xl text-center text-black mb-10">New Post</p>
       <label htmlFor="title">제목</label>
       <input
         className="w-full border-black border-2 mb-2 p-4 text-[20px]"
@@ -59,7 +59,6 @@ export default function NewPostForm() {
         onChange={(newContent: string) => contentChangeHandler(newContent)}
       />
       <hr />
-      <button type="submit">제출</button>
     </form>
   );
 }

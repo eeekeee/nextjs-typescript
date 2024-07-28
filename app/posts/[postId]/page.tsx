@@ -1,6 +1,7 @@
 import { getPost } from "@/lib/posts";
 import { Metadata } from "next";
 import { Suspense } from "react";
+import DOMPurify from "dompurify";
 
 type Props = {
   params: {
@@ -34,10 +35,13 @@ export default function PostDetailPage({ params }: Props) {
     if (!post) {
       return null;
     }
+
+    const sanitizeContent = DOMPurify.sanitize(post.content);
+
     return (
       <div>
         <p>{post.title}</p>
-        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        <div dangerouslySetInnerHTML={{ __html: sanitizeContent }} />
         <p>author</p>
         <p className="self-end">{post.created_at.toLocaleString("ko-kr")}</p>
       </div>

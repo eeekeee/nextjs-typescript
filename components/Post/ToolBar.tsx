@@ -1,4 +1,4 @@
-import { type Editor } from "@tiptap/react";
+import type { Editor } from "@tiptap/react";
 
 import {
   Bold,
@@ -6,12 +6,12 @@ import {
   Italic,
   List,
   ListOrdered,
+  Heading1,
   Heading2,
+  Heading3,
   Underline,
-  Quote,
   Undo,
   Redo,
-  Code,
 } from "lucide-react";
 
 type ToolBarProps = {
@@ -81,6 +81,19 @@ export default function ToolBar({ editor, content }: ToolBarProps) {
         <button
           onClick={(e) => {
             e.preventDefault();
+            editor.chain().focus().toggleHeading({ level: 1 }).run();
+          }}
+          className={
+            editor.isActive("heading", { level: 1 })
+              ? "bg-sky-700 text-white p-2 rounded-lg"
+              : "text-sky-400"
+          }
+        >
+          <Heading1 className="w-5 h-5" />
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
             editor.chain().focus().toggleHeading({ level: 2 }).run();
           }}
           className={
@@ -90,6 +103,19 @@ export default function ToolBar({ editor, content }: ToolBarProps) {
           }
         >
           <Heading2 className="w-5 h-5" />
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            editor.chain().focus().toggleHeading({ level: 3 }).run();
+          }}
+          className={
+            editor.isActive("heading", { level: 3 })
+              ? "bg-sky-700 text-white p-2 rounded-lg"
+              : "text-sky-400"
+          }
+        >
+          <Heading3 className="w-5 h-5" />
         </button>
 
         <button
@@ -117,32 +143,6 @@ export default function ToolBar({ editor, content }: ToolBarProps) {
           }
         >
           <ListOrdered className="w-5 h-5" />
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().toggleBlockquote().run();
-          }}
-          className={
-            editor.isActive("blockquote")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
-              : "text-sky-400"
-          }
-        >
-          <Quote className="w-5 h-5" />
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            editor.chain().focus().setCode().run();
-          }}
-          className={
-            editor.isActive("code")
-              ? "bg-sky-700 text-white p-2 rounded-lg"
-              : "text-sky-400"
-          }
-        >
-          <Code className="w-5 h-5" />
         </button>
         <button
           onClick={(e) => {

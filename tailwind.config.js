@@ -9,7 +9,25 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontSize: {
+        custom: "20px",
+      },
+      maxWidth: {
+        full: "100%",
+      },
+      height: {
+        default: "300px",
+      },
+      borderRadius: {
+        lg: "10px",
+      },
+      colors: {
+        gray: {
+          border: "#cccccc",
+        },
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };

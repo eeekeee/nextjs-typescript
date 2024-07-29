@@ -26,3 +26,26 @@ main {
   margin: 5rem auto;
 }
 
+
+/* @import 'tailwindcss/tailwind.css'; */
+
+/* Override margin-bottom for specific tags */
+@layer components {
+  .prose p, .prose h1, .prose h2, .prose h3, .prose ul, .prose ol {
+    margin: 0;
+    padding: 0;
+  }
+}
+/* 
+.tiptap-editor .prose p, 
+.tiptap-editor .prose h1, 
+.tiptap-editor .prose h2, 
+.tiptap-editor .prose h3, 
+.tiptap-editor .prose h4, 
+.tiptap-editor .prose h5, 
+.tiptap-editor .prose h6, 
+.tiptap-editor .prose ul, 
+.tiptap-editor .prose ol {
+  margin: 0 !important;
+  padding: 0;
+} */

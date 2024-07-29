@@ -24,7 +24,7 @@ export default function ToolBar({ editor, content }: ToolBarProps) {
     return null;
   }
   return (
-    <div className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-start gap-5 w-full flex-wrap border border-gray-700">
+    <div className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-center gap-5 w-full flex-wrap border border-gray-700">
       <div className="flex justify-start items-center gap-5 w-full lg:w-10/12 flex-wrap ">
         <button
           onClick={(e) => {

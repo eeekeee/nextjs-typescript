@@ -17,7 +17,7 @@ export default function NewPostForm() {
     e.preventDefault();
 
     const title = titleRef.current?.value;
-    if (!title) {
+    if (!title || title === "") {
       console.error("Title is required.");
       return;
     }
@@ -26,6 +26,9 @@ export default function NewPostForm() {
       title: title,
       content: content,
     };
+
+    console.log(data);
+    // return;
 
     const { success }: { success: boolean } = await createPost(data);
 

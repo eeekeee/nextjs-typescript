@@ -2,6 +2,8 @@ import { getPost } from "@/lib/posts";
 import { Metadata } from "next";
 import { Suspense } from "react";
 import DOMPurify from "dompurify";
+import { JSDOM } from "jsdom";
+import BackButton from "@/components/BackButton";
 
 type Props = {
   params: {
@@ -36,12 +38,17 @@ export default function PostDetailPage({ params }: Props) {
       return null;
     }
 
-    const sanitizeContent = DOMPurify.sanitize(post.content);
+    const sanitizeHtml = (html: string) => {
+      return DOMPurify(new JSDOM("<!DOCTYPE html>").window).sanitize(html);
+    };
 
     return (
       <div>
         <p>{post.title}</p>
-        <div dangerouslySetInnerHTML={{ __html: sanitizeContent }} />
+        <div
+          className="grid justify-center"
+          dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
+        />
         <p>author</p>
         <p className="self-end">{post.created_at.toLocaleString("ko-kr")}</p>
       </div>
@@ -49,8 +56,8 @@ export default function PostDetailPage({ params }: Props) {
   }
 
   return (
-    <main>
-      <h1>PostDetailPage</h1>
+    <main className="grid">
+      <BackButton></BackButton>
       <Suspense fallback={<p>Loading... Post</p>}>
         <Post />
       </Suspense>

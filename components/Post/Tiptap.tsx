@@ -4,6 +4,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import ToolBar from "@/components/Post/ToolBar";
 import Underline from "@tiptap/extension-underline";
+import Image from "@tiptap/extension-image";
 
 const Tiptap = ({
   onChange,
@@ -23,6 +24,9 @@ const Tiptap = ({
         },
       }),
       Underline,
+      Image.configure({
+        allowBase64: true,
+      }),
     ],
     editorProps: {
       attributes: {

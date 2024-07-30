@@ -10,9 +10,11 @@ import {
   Heading2,
   Heading3,
   Underline,
+  FileImage,
   Undo,
   Redo,
 } from "lucide-react";
+import { useRef } from "react";
 
 type ToolBarProps = {
   editor: Editor | null;
@@ -20,9 +22,33 @@ type ToolBarProps = {
 };
 
 export default function ToolBar({ editor, content }: ToolBarProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   if (!editor) {
     return null;
   }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        editor
+          .chain()
+          .focus()
+          .setImage({ src: reader.result as string })
+          .run();
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const fileInputHandler = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   return (
     <div className="px-4 py-3 rounded-tl-md rounded-tr-md flex justify-between items-center gap-5 w-full flex-wrap border border-gray-700">
       <div className="flex justify-start items-center gap-5 w-full lg:w-10/12 flex-wrap ">
@@ -144,6 +170,17 @@ export default function ToolBar({ editor, content }: ToolBarProps) {
         >
           <ListOrdered className="w-5 h-5" />
         </button>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          hidden
+        ></input>
+        <FileImage
+          className="w-5 h-5 text-sky-400 hover:text-sky-700"
+          onClick={fileInputHandler}
+        />
         <button
           onClick={(e) => {
             e.preventDefault();

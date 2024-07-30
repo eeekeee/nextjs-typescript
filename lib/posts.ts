@@ -2,8 +2,9 @@
 
 import { connectDB } from "@/lib/database";
 import { ObjectId } from "mongodb";
-import slugify from "slugify";
 import xss from "xss";
+
+import { uploadImageToCloudinary } from "@/util/cloudinary";
 
 export async function getPosts() {
   try {
@@ -58,14 +59,62 @@ export async function createPost(data: { title: string; content: string }) {
     const title = data.title as string;
     const content = data.content as string;
 
+    if (title === "" || content === "") {
+      throw new Error("Check your form");
+    }
+
+    const imgTagRegex = /<img[^>]+src="data:image\/[^">]+"/g;
+    let match;
+    const imageUploads: Promise<string>[] = [];
+
+    // content에서 모든 이미지 URL을 추출
+    while ((match = imgTagRegex.exec(content)) !== null) {
+      const imgTag = match[0];
+      const base64ImageMatch = imgTag.match(/src="data:image\/[^">]+"/);
+
+      if (base64ImageMatch) {
+        const base64Image = base64ImageMatch[0].split('"')[1];
+        imageUploads.push(uploadImageToCloudinary(base64Image));
+      }
+    }
+
+    const imageUrls = await Promise.all(imageUploads);
+    console.log(imageUrls);
+
+    let updatedContent = content;
+    let urlIndex = 0;
+
+    updatedContent = updatedContent.replace(imgTagRegex, (match) => {
+      const base64ImageMatch = match.match(/src="data:image\/[^">]+"/);
+      if (base64ImageMatch) {
+        const base64Image = base64ImageMatch[0].split('"')[1];
+        const cloudinaryUrl = imageUrls[urlIndex++];
+        return match.replace(base64Image, cloudinaryUrl);
+      }
+      return match;
+    });
+
     const post = {
-      title: slugify(title),
-      content: xss(content),
+      title: title,
+      content: xss(updatedContent),
       // image: image,
       // author: author,
       created_at: new Date(),
       updated_at: new Date(),
     };
+
+    // return { success: false };
+
+    //////////
+
+    // const post = {
+    //   title: slugify(title),
+    //   content: xss(content),
+    //   // image: image,
+    //   // author: author,
+    //   created_at: new Date(),
+    //   updated_at: new Date(),
+    // };
 
     const db = (await connectDB()).db("guam");
     const postsCollection = db.collection("posts");

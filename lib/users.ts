@@ -147,3 +147,49 @@ export async function Login(formData: FormData) {
     return { success: false, message: "로그인 실패" };
   }
 }
+
+// valid
+
+export async function checkValidEmail(
+  email: string
+): Promise<{ success: boolean }> {
+  try {
+    const db = (await connectDB()).db("guam");
+    const usersCollection = db.collection<User>("users");
+
+    const existingUser = await usersCollection.findOne({ email });
+
+    console.log(existingUser);
+
+    if (existingUser) {
+      return { success: false };
+    } else {
+      return { success: true };
+    }
+  } catch (error) {
+    console.error("Error checking email:", error);
+    throw new Error("Failed to check email");
+  }
+}
+
+export async function checkValidUsername(
+  username: string
+): Promise<{ success: boolean }> {
+  try {
+    const db = (await connectDB()).db("guam");
+    const usersCollection = db.collection<User>("users");
+
+    const existingUser = await usersCollection.findOne({ username });
+
+    console.log(existingUser)
+
+    if (existingUser) {
+      return { success: false };
+    } else {
+      return { success: true };
+    }
+  } catch (error) {
+    console.error("Error checking username:", error);
+    throw new Error("Failed to check username");
+  }
+}

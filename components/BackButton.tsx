@@ -10,7 +10,7 @@ export default function BackButton() {
   }
   return (
     <button
-      className="px-4 py-2 mx-4 mb-8 border border-black bg-white text-black text-[20px] rounded-xl  hover:bg-black hover:text-white transition-colors"
+      className="text-[16px] tracking-wider px-6 py-2 border border-black bg-white text-black  rounded-xl  hover:bg-black hover:text-white transition-colors items-center"
       onClick={backHandler}
     >
       뒤로가기

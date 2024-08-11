@@ -43,25 +43,27 @@ export default function PostDetailPage({ params }: Props) {
     };
 
     return (
-      <div>
-        <p>{post.title}</p>
+      <div className="justify-center grid">
+        <div className="flex w-full px-4 py-1 justify-center gap-x-24 items-center border-y-4 mb-4">
+          <BackButton></BackButton>
+          <p className="text-2xl">{post.title}</p>
+          <p>author</p>
+          <p className="">{post.created_at.toLocaleString("ko-kr")}</p>
+        </div>
         <div
-          className="grid justify-center"
+          className="border-4 text-l font-light px-8"
           dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
         />
-        <p>author</p>
-        <p className="self-end">{post.created_at.toLocaleString("ko-kr")}</p>
       </div>
     );
   }
 
   return (
     <main className="grid">
-      <BackButton></BackButton>
       <Suspense fallback={<p>Loading... Post</p>}>
         <Post />
       </Suspense>
-      <p>{params.postId}</p>
+      {/* <p>{params.postId}</p> */}
     </main>
   );
 }

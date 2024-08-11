@@ -17,10 +17,13 @@ async function Posts() {
 
 export default function PostsPage() {
   return (
-    <main className="mt-8 border-red-500 border-2 ">
-      <div className="flex w-full justify-around items-center my-2">
-        <p className="text-3xl">Post Page</p>
-        <Link className="border-yellow-300 border-4" href={"/posts/new"}>
+    <main className="mt-8">
+      <div className="flex w-full justify-around items-center my-4">
+        <p className="text-3xl">자유글</p>
+        <Link
+          className="bg-gray-50 border-gray-500 border rounded-lg px-4 py-2 hover:bg-blue-100"
+          href={"/posts/new"}
+        >
           글 생성하기
         </Link>
       </div>
